@@ -1,6 +1,4 @@
 import React from 'react'
-import Home from '../Assets/pexelquiz.jpg'
-import {FaLongArrowAltRight} from 'react-icons/fa'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 import { Fade } from 'react-awesome-reveal'
@@ -14,7 +12,6 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBCardImage,
-  MDBBtn,
   MDBRipple
 } from 'mdb-react-ui-kit';
 
@@ -56,9 +53,7 @@ const Clicked = (e) => {
         <MDBCard className='animicard' style={{backgroundColor:"rgba(255,255,255,.7)"}}>
           <MDBRipple rippleColor='light' rippleTag='div' className='bg-image hover-overlay'>
             <MDBCardImage src={Teach}fluid alt='...' />
-            <a>
               <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-            </a>
           </MDBRipple>
           <MDBCardBody>
             <MDBCardTitle>Faculty</MDBCardTitle>
@@ -68,14 +63,10 @@ const Clicked = (e) => {
             <button className='btn text-light btn-sm' style={{width:"150px",borderRadius:"30px",backgroundColor:"#ea7e36",fontFamily:"QuickSand",fontSize:"20px"}} onClick={Clicked}>Login</button>
           </MDBCardBody>
         </MDBCard>
-        {/* </Fade>
-        <Fade cascade duration={2000} style ={{marginTop:"100px"}} damping = {.1}> */}
         <MDBCard className='shadow shadow-lg'>
           <MDBRipple rippleColor='light' rippleTag='div' className='bg-image hover-overlay'>
             <MDBCardImage src={Student} fluid alt='...' />
-            <a>
               <div className='mask' style={{ backgroundColor: 'rgba(251, 251, 251, 0.15)' }}></div>
-            </a>
           </MDBRipple>
           <MDBCardBody>
             <MDBCardTitle>Student</MDBCardTitle>
@@ -85,8 +76,6 @@ const Clicked = (e) => {
             <button className='btn text-light btn-sm' style={{width:"150px",borderRadius:"30px",backgroundColor:"#ea7e36",fontFamily:"QuickSand",fontSize:"20px"}} onClick={Slogin}>Login</button>
           </MDBCardBody>
         </MDBCard>
-        {/* </Fade> 
-        <Fade cascade duration={2000} className='p-0'> */}
         <div className='footer'>
           <span className='text-white'>&copy; 2023 Quiz Portal. All rights reserved. | Made with <span role='img' aria-label='love'>❤️</span> by Quiz Portal Team <p>Reach Us <MdOutlineAlternateEmail/> : anitsquiz01@gmail.com</p></span>
         </div> 

@@ -3,7 +3,6 @@ import {MDBBtn,MDBInput } from 'mdb-react-ui-kit'
 import Form from 'react-bootstrap/Form';
 import { useLocation,useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import CryptoJS from 'crypto-js'
 import Cookies from 'js-cookie'
 import Loading from '../Components/Loader'
 import React from "react";
@@ -46,10 +45,6 @@ const Fclass = () => {
     navigate('/flogin')
     }  
     console.log(window.history);
-
-    const key = 'saisree@12'
-    const ubytes = CryptoJS.AES.decrypt(Cookies.get('process_id'),key);
-    const d_uname = JSON.parse(ubytes.toString(CryptoJS.enc.Utf8));
     React.useEffect(() => {
         setTimeout(() => {
             setLoading(false)
@@ -141,7 +136,7 @@ return (
             <div className='bg-dark d-flex flex-row flex-wrap justify-content-center align-items-center' style={{gap:80}}>
                 {res.map((item,index) => {return(
                     <SwiperSlide className='rounded rounded-5' key={index} onClick={() => Clicked(index)} style={{width:'350px',height:'500px',gap:40}} >
-                        <img style={{borderRadius:15}} src={require(`../Assets/${item.body}`)} />
+                        <img style={{borderRadius:15}} alt='Card' src={require(`../Assets/${item.body}`)} />
                         <br></br>
                         <div className=' p-3 rounded-5' style={{background:'rgba(0,0,0,0.3)'}}>
                         <h5 className='text-white text-center h4' style={{fontFamily:"QuickSand"}}>{item.sname}</h5>

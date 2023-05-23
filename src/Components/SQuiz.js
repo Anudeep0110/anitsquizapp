@@ -27,7 +27,7 @@ const Timer = ({duration,onTimeOver}) => {
         if (timeLeft === 0) {
           onTimeOver(); // Trigger the event when the time is over
         }
-      }, [timeLeft]);
+      }, [timeLeft,onTimeOver]);
 
     return (
       <div>
@@ -90,6 +90,7 @@ const Quizques = () => {
             setQs(res.data.questions)
             console.log(mpq);
         })
+        //eslint-disable-next-line
     },[quizid])
 
     const Next = (e) => {

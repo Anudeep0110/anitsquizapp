@@ -18,7 +18,6 @@ const SLogin = () => {
         .then((res) => {
             if(res.data.validation){
                 const encrypteduname = CryptoJS.AES.encrypt(JSON.stringify(uname),key).toString()
-                const encryptedpwd = CryptoJS.AES.encrypt(JSON.stringify(pwd),key).toString()
                 Cookies.set("sprocess_id",encrypteduname,{path:'/',expires:1})
                 navigation('/student/sdash',{state:{flag:true}})
             }else{

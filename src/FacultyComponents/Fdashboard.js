@@ -1,7 +1,6 @@
 import React from 'react'
 import NavbarComp from '../Components/NavbarComp'
 import {Card} from 'react-bootstrap'
-import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
@@ -12,7 +11,6 @@ import { Fade } from 'react-awesome-reveal'
 const Fdashboard = () => {
     console.log(window.history);
     const [usr,setUsr] = React.useState() 
-    const location = useLocation()
     const [res,setRes] = React.useState([])
     const [resQuiz,setResQuiz] = React.useState([])
     const [fNotes,setFNotes] = React.useState([])
@@ -37,6 +35,7 @@ const Fdashboard = () => {
             setFNotes(res.data.fNotes)
         })   
         setUsr(d_uname)
+        //eslint-disable-next-line
     },[]) 
     const Rendered = (index) => {
     axios.post('https://anitsquizapp.onrender.com/pdf',{id:fNotes[index].notesId}).then(response => {

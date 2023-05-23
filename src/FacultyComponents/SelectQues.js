@@ -1,7 +1,7 @@
 import React from 'react'
 import NavbarComp from '../Components/NavbarComp'
 import {Card} from 'react-bootstrap'
-import { MDBBtn, MDBInput } from 'mdb-react-ui-kit'
+import { MDBInput } from 'mdb-react-ui-kit'
 import { Alert } from 'react-bootstrap';
 import CryptoJS from 'crypto-js'
 import { useLocation,useNavigate } from 'react-router-dom'
@@ -20,16 +20,17 @@ const SelectQues = () => {
     const [flag,setFlag] = React.useState(true)
     const [noqss,setNoqs] = React.useState(0)
     
+    const Location = useLocation(); 
+    const navigate = useNavigate();
     if(Cookies.get('process_id')===undefined){
         navigate('/flogin')
     } 
-    const Location = useLocation(); 
-    const navigate = useNavigate();
     var subId = Location.state.subId
     var subName = Location.state.subName
     var quizId = Location.state.quizId
     var quizName = Location.state.quizName
     var topicName = Location.state.topicName
+    //eslint-disable-next-line
     var noqs = Location.state.noqs
     var mpq = parseInt(Location.state.mpq)
     var classId = Location.state.classId 
@@ -75,15 +76,8 @@ const SelectQues = () => {
             setColored(dic)
 
             setQsSearch(res.data) 
-            const len = res.data.length
         })
 
-
-            // const l = [...qs]
-            // console.log(l)
-            // l.filter(x => !selected.includes(x.quesid))
-            // console.log("HI",l)
-            // setQs(l)
 
     },[])  
 
@@ -135,10 +129,6 @@ const SelectQues = () => {
             axios.post('https://anitsquizapp.onrender.com/add-select-prev-ques',{quizId:quizId,selected:selected}).then((res) => {
             }) 
             navigate('/faculty/fdash')
-            // document.getElementById('pop').style.visibility = 'visible';
-            // document.getElementById('pop').style.backdropFilter = 'blur(5px)';
-            // document.getElementById('whole').style.filter = 'blur(15px)';
-            // document.getElementById('pop-out').style.visibility = 'visible';
         }   
         else{
             setFlag(false);
@@ -149,16 +139,6 @@ const SelectQues = () => {
         navigate('/faculty/myclass/assignquiz/add-ques',{state:{selected:selected,subId:subId,subName:subName,quizName:quizName,topicName:topicName,classId:classId,quizDate:quizDate,quizTime:quizTime,duration:duration,mpq:mpq,quizId:quizId,addFlag:1}})
     }
 
-    const ClosePop = () => {
-        navigate('/faculty/fdash')
-        document.getElementById('pop').style.visibility = 'hidden';
-        document.getElementById('pop').style.backdropFilter = 'none';
-        document.getElementById('pop-out').style.visibility = 'hidden';
-        document.getElementById('whole').style.filter = 'blur(0px)';
-    } 
-    const success = () => {
-        navigate('/faculty/fdash')
-    }
 
 return (
     <div className='d-flex flex-column' style={{minHeight:'100vh',background:"linear-gradient(to right,#cfd9df,#e2ebf0)"}}>
