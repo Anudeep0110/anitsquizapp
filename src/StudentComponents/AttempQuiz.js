@@ -57,6 +57,9 @@ const AttempQuiz = () => {
             setAns(res.data.questions)
         })
     }
+    console.log(((stime<=ctime)
+    &&(ctime<=etime))
+    && isValid);
   return (
     <>
     {flag?isLoading?<Loader/>:
