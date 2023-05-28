@@ -62,7 +62,7 @@ const SDash = () => {
         </div>
         <Fade cascade duration={4000}>
         <div className='w-100 mt-5 pt-5'>
-            <p className='text-center' style={{fontFamily:"QuickSand",fontWeight:800,fontSize:40}}>Welcome {sname}</p>
+            <p className='text-center mt-5' style={{fontFamily:"QuickSand",fontWeight:800,fontSize:40}}>Welcome {sname}</p>
         </div>
         </Fade>
         <div className='ps-5 mb-0 mt-5 pt-5'>

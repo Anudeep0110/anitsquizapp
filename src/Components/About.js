@@ -29,7 +29,7 @@ const About = () => {
             </div>
             <div className='d-flex flex-column h-100'>
                 <Fade cascade duration={2000} direction='down'>
-                <p className='h1 text-center p-5' style={{fontSize:'50px'}}>Meet the Team</p>
+                <p className='h1 text-center p-5' style={{fontSize:'50px',marginTop:100}}>Meet the Team</p>
                 </Fade>
                 <div className='d-flex justify-content-center flex-wrap' style={{gap:'90px'}}>
                     <Fade cascade duration={2000} direction='left'>

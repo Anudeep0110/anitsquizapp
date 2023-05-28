@@ -145,7 +145,7 @@ const Quizques = () => {
         </>:
     <div className='d-flex flex-column flex-wrap ques' style={{height:"100vh",width:"100%",background:"linear-gradient(to right,#cfd9df,#e2ebf0)"}}>
         <div className='d-flex p-4 justify-content-around'>
-            <p className='h2 ps-5 text-dark' style={{fontFamily:'QuickSand'}}>JAVA MCQ's</p>
+            <p className='h2 ps-5 text-dark' style={{fontFamily:'QuickSand'}}>{location.state.quizName}</p>
             <p className='h5 text-dark' style={{fontFamily:"QuickSand"}} id='timer'><Timer duration = {duration} onTimeOver = {handleTimeOver}/></p>
         </div> 
         <div className='d-flex flex-column justify-content-start pt-5' style={{gap:60}}>

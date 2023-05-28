@@ -47,7 +47,7 @@ const AttempQuiz = () => {
     },[stime,etime])
     console.log((etime)>new Date().toLocaleTimeString({hour12:true}));
     const Attempt = () => {
-        navigation('/student/quizqs',{state:{quizid:location.state.quizid,subId:res.subId,marks:marks,duration:res.duration}})
+        navigation('/student/quizqs',{state:{quizid:location.state.quizid,subId:res.subId,marks:marks,duration:res.duration,quizName:res.QuizName}})
     }
 
 

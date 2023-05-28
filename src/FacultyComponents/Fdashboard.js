@@ -55,7 +55,7 @@ const Fdashboard = () => {
             <div className='d-flex flex-column fdash w-100'>
                 <Fade cascade duration={2000}>
                 <div className=' p-5 m-5 text-center'>
-                    <p className='h1' style={{fontWeight:"600"}}>Welcome {usr} ,</p>
+                    <p className='h1 mt-5' style={{fontWeight:"600"}}>Welcome {usr} ,</p>
                 </div>
                 </Fade>
                 <div className='d-flex flex-column'>

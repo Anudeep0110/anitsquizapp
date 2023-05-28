@@ -39,7 +39,7 @@ const Clicked = (e) => {
 
   return (
     <>
-    <div className='d-flex justify-content-between'>
+    <div className='d-flex justify-content-between mt-5'>
       <div className='home-text d-flex flex-column' style={{gap:40}}>
         <Fade cascade damping={.2} direction='left' duration={2000}>
           <div>
