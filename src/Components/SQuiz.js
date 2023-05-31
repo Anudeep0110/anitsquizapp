@@ -66,7 +66,7 @@ const SQuiz = () => {
     const uname = JSON.parse(ubytes.toString(CryptoJS.enc.Utf8));
 
     const handleTimeOver = () => {
-        axios.post('https://anitsquizapp.onrender.com/updatemarks',{quizid:quizid,uname:uname,marks:(marks+1)*mpq,subId:subId})
+        axios.post('https://anitsquizapp.onrender.com/updatemarks',{quizid:quizid,uname:uname,marks:(marks)*mpq,subId:subId})
             .then(res => {
                 document.getElementById('pop').style.visibility = 'visible';
                 document.getElementById('pop').style.backdropFilter = 'blur(5px)';
