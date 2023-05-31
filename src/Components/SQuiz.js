@@ -44,7 +44,7 @@ const Timer = ({duration,onTimeOver}) => {
 
 
 
-const Quizques = () => {
+const SQuiz = () => {
 
     const [blabel,setBlabel] = React.useState('Next')
     const [marks,setMarks] = React.useState(0)
@@ -193,4 +193,4 @@ const Quizques = () => {
   )
 }
 
-export default Quizques
+export default SQuiz
