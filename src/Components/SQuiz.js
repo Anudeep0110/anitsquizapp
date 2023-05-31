@@ -114,7 +114,7 @@ const Quizques = () => {
             document.getElementById('pop').style.visibility = 'visible';
             document.getElementById('pop').style.backdropFilter = 'blur(5px)';
             document.getElementById('pop-out').style.visibility = 'visible';
-            axios.post('https://anitsquizapp.onrender.com/updatemarks',{quizid:quizid,uname:uname,marks:marks*mpq,subId:subId})
+            axios.post('https://anitsquizapp.onrender.com/updatemarks',{quizid:quizid,uname:uname,marks:(marks+1)*mpq,subId:subId})
             .then(res => {
                 setTimeout(() => {
                     navigate('/student/sdash')
