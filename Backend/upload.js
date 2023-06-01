@@ -111,6 +111,69 @@ app.post('/pdf',async (req,res) => {
         })
     })
   
+    // app.post('/download-pdf', (req, res) => {
+    //   const tabularData = req.body.data;
+    //   const className = req.body.cName;
+    //   const subName = req.body.subName;
+    //   const doc = new PDFDocument();
+    //   const stream = doc.pipe(blobStream());
+    
+    //   doc.fontSize(16).font('Helvetica-Bold');
+    //   doc.text('Student Marks Details', { align: 'center' });
+    //   doc.moveDown();
+    //   doc.fontSize(12).font('Helvetica-Bold');
+    //   doc.text('Class Name: ' + className, { align: 'left' });
+    //   doc.text('Subject Name: ' + subName, { align: 'left' });
+    //   doc.moveDown();
+    
+    //   doc.fontSize(12).font('Helvetica-Bold');
+    //   doc.text('Reg ID', 50, 155, { width: 100, align: 'center' });
+    //   doc.text('Student Name', 150, 155, { width: 150, align: 'center' });
+    //   doc.text('Quiz 1 Marks', 300, 155, { width: 80, align: 'center' });
+    //   doc.text('Quiz 2 Marks', 380, 155, { width: 80, align: 'center' });
+    //   doc.text('Total Marks', 460, 155, { width: 80, align: 'center' });
+    
+    //   doc.lineWidth(1).rect(50, 150, 500, 25).stroke();
+    //   doc.lineWidth(1).moveTo(150, 150).lineTo(150, 175).stroke();
+    //   doc.lineWidth(1).moveTo(300, 150).lineTo(300, 175).stroke();
+    //   doc.lineWidth(1).moveTo(380, 150).lineTo(380, 175).stroke();
+    //   doc.lineWidth(1).moveTo(460, 150).lineTo(460, 175).stroke();
+    
+    //   doc.fontSize(10).font('Helvetica');
+    //   let y = 175;
+    
+    //   tabularData.rows.forEach((row) => {
+    //     doc.lineWidth(1).rect(50, y, 500, 25).stroke();
+    
+    //     doc.text(row.regno.toString(), 50, y + 5, { width: 100, align: 'center' });
+    //     doc.text(row.name.toString(), 150, y + 5, { width: 150, align: 'center' });
+    //     doc.text(row.quiz1_marks.toString(), 300, y + 5, { width: 80, align: 'center' });
+    //     doc.text(row.quiz2_marks.toString(), 380, y + 5, { width: 80, align: 'center' });
+    //     doc.text(row.tot_marks.toString(), 460, y + 5, { width: 80, align: 'center' });
+    
+    //     doc.lineWidth(1).moveTo(150, y).lineTo(150, y + 25).stroke();
+    //     doc.lineWidth(1).moveTo(300, y).lineTo(300, y + 25).stroke();
+    //     doc.lineWidth(1).moveTo(380, y).lineTo(380, y + 25).stroke();
+    //     doc.lineWidth(1).moveTo(460, y).lineTo(460, y + 25).stroke();
+    
+    //     y += 25;
+    //   });
+    
+    //   const chunks = [];
+    //   doc.on('data', (chunk) => chunks.push(chunk));
+    //   doc.on('end', () => {
+    //     const result = Buffer.concat(chunks);
+    //     res.writeHead(200, {
+    //       'Content-Type': 'application/pdf',
+    //       'Content-Disposition': 'attachment; filename="studentmarksdetails.pdf"',
+    //       'Content-Length': result.length,
+    //     });
+    //     res.end(result);
+    //   });
+    
+    //   doc.end();
+    // });
+
     app.post('/download-pdf', (req, res) => {
       const tabularData = req.body.data;
       const className = req.body.cName;
@@ -143,6 +206,12 @@ app.post('/pdf',async (req,res) => {
       let y = 175;
     
       tabularData.rows.forEach((row) => {
+        // Check if the current row exceeds the page height
+        if (y > doc.page.height - 25) {
+          doc.addPage(); // Add a new page
+          y = 50; // Reset the y-coordinate
+        }
+    
         doc.lineWidth(1).rect(50, y, 500, 25).stroke();
     
         doc.text(row.regno.toString(), 50, y + 5, { width: 100, align: 'center' });
@@ -173,8 +242,7 @@ app.post('/pdf',async (req,res) => {
     
       doc.end();
     });
-
-
+    
 const storagepdf = multer.memoryStorage();
 const uploadpdf = multer({ storage: storagepdf });
 
