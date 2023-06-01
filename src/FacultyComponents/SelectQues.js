@@ -178,22 +178,11 @@ return (
                     })} 
                 <div className='d-flex justify-content-center'>
                     <button className='btn btn-primary  m-5' onClick={Add}>Add New qs</button>
-                    <button className='btn btn-primary m-5' onClick={Host}>Host</button>
+                    <button className='btn btn-primary m-5' onClick={Host}>Host & Mail</button>
                 </div> 
             </div>
         </div>
         } 
-        {/* <div className='fpop-out' id='pop-out'>
-            <div className='f-pop' id='pop'>
-                <button className='btn btn-close'  onClick={() => ClosePop()}></button>
-                <div className='d-flex align-items-start h-100'> 
-                    <div className='w-50 h-100 d-flex flex-column justify-content-around align-items-center'>
-                        <img></img>
-                        <MDBBtn color='success' onClick={success}>Success</MDBBtn>
-                    </div> 
-                </div>   
-            </div> 
-        </div>  */}
     </div>
     )   
 }   

@@ -170,7 +170,7 @@ return (
                         <div className='my-5 d-flex flex-wrap justify-content-between'>
                             <button className='btn btn-primary' onClick={Add}>Add Question</button>
                             <button className='btn btn-primary' onClick={AddPrev}>Add from prev questions</button>
-                            <button className='btn btn-primary' onClick={Host}>Host</button>
+                            <button className='btn btn-primary' onClick={Host}>Host & Mail</button>
                         </div>
                     </form>
                 </div>
