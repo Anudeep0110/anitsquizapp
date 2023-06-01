@@ -206,8 +206,8 @@ app.post('/pdf',async (req,res) => {
       let y = 175;
     
       tabularData.rows.forEach((row) => {
-        // Check if the current row exceeds the page height
-        if (y > doc.page.height - 25) {
+        // Check if adding the row will exceed the page height
+        if (y + 25 > doc.page.height - 50) {
           doc.addPage(); // Add a new page
           y = 50; // Reset the y-coordinate
         }
@@ -242,6 +242,7 @@ app.post('/pdf',async (req,res) => {
     
       doc.end();
     });
+    
     
 const storagepdf = multer.memoryStorage();
 const uploadpdf = multer({ storage: storagepdf });
