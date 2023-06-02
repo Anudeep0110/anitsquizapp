@@ -42,46 +42,92 @@ const SelectQues = () => {
     const ubytes = CryptoJS.AES.decrypt(Cookies.get('process_id'),key);
     const uname = JSON.parse(ubytes.toString(CryptoJS.enc.Utf8));
 
+    // React.useEffect(() => {
+    //     var selectFlag = Location.state.selectFlag 
+    //     if(selectFlag===1){
+    //         quizName = Location.state.quizName
+    //         topicName = Location.state.topicName
+    //         quizDate = Location.state.quizDate
+    //         quizTime = Location.state.quizTime
+    //         duration = Location.state.duration
+    //         mpq = Location.state.mpq
+    //         subName = Location.state.subName
+    //         quizId = Location.state.quizId
+    //         result = Location.state.Result
+    //         subId = Location.state.subId
+    //         setSelected([...result])
+    //         setNoqs(result.length)
+    //     } 
+    //     axios.post('https://anitsquizapp.onrender.com/select-ques',{subName:subName}).then((res) => {
+    //         setTimeout(() => {
+    //             setLoading(false)
+    //         },3000) 
+    //         var fltr = res.data.filter(item => {
+    //             console.log(item.quesid)
+    //             return !selected.includes(item.quesid);
+    //         })    
+    //         console.log("fltr",fltr)
+    //         setQs(fltr)
+    //         const l = []
+            
+    //         qs.map(i => {
+    //             l.push(i.quesid);
+    //         })
+    //         const dic = {}
+
+    //         l.forEach(key => {
+    //             dic[key] = false;
+    //         })
+    //         setColored(dic)
+    //         setQsSearch(res.data) 
+    //     })
+
+    // },[])  
+
     React.useEffect(() => {
-        var selectFlag = Location.state.selectFlag 
-        if(selectFlag===1){
-            quizName = Location.state.quizName
-            topicName = Location.state.topicName
-            quizDate = Location.state.quizDate
-            quizTime = Location.state.quizTime
-            duration = Location.state.duration
-            mpq = Location.state.mpq
-            subName = Location.state.subName
-            quizId = Location.state.quizId
-            result = Location.state.Result
-            subId = Location.state.subId
-            setSelected([...result])
-            setNoqs(result.length)
-        } 
-
-        axios.post('https://anitsquizapp.onrender.com/select-ques',{subName:subName}).then((res) => {
-            setTimeout(() => {
-                setLoading(false)
-            },3000)
-            const l = []
-            setQs(res.data)
-            qs.map(i => {
-                l.push(i.quesid);
+        var selectFlag = Location.state.selectFlag;
+        if (selectFlag === 1) {
+          quizName = Location.state.quizName;
+          topicName = Location.state.topicName;
+          quizDate = Location.state.quizDate;
+          quizTime = Location.state.quizTime;
+          duration = Location.state.duration;
+          mpq = Location.state.mpq;
+          subName = Location.state.subName;
+          quizId = Location.state.quizId;
+          result = Location.state.Result;
+          subId = Location.state.subId;
+          setSelected([...result]);
+          setNoqs(result.length);
+        }
+      }, []);
+      
+      React.useEffect(() => {
+        if (subName) {
+          axios.post('https://anitsquizapp.onrender.com/select-ques', { subName: subName })
+            .then((res) => {
+              setTimeout(() => {
+                setLoading(false);
+              }, 3000);
+              setQs(res.data);
             })
-            const dic = {}
-
-            l.forEach(key => {
-                dic[key] = false;
-            })
-            setColored(dic)
-
-            setQsSearch(res.data) 
-        })
-
-
-    },[])  
-
-
+            .catch((error) => {
+              console.log(error);
+              setLoading(false);
+            });
+        }
+      }, [subName]);
+      
+      React.useEffect(() => {
+        const l = qs.map((i) => i.quesid);
+        const dic = {};
+        l.forEach((key) => {
+          dic[key] = selected.includes(key);
+        });
+        setColored(dic);
+        setQsSearch(qs);
+      }, [qs, selected]); 
+      
     const Clicked = (e,val) => { 
         if(selected.indexOf(val) === -1){
             setSelected([...selected,val])
@@ -90,7 +136,7 @@ const SelectQues = () => {
             const updatedList = selected.filter((value) => value !== val);
             setSelected([...updatedList]); 
             setNoqs(noqss-1)
-        } 
+        }  
         var l = {...colored}
         l[val] = !l[val]
         setColored(l) 
@@ -110,7 +156,7 @@ const SelectQues = () => {
         setQs(l)
     } 
     const Host = () => {
-            if(selected.length>0){
+            if(selected.length>4){
                 axios.post('https://anitsquizapp.onrender.com/select-prev-ques',{
                     quizId:quizId,
                     quizName:quizName,
@@ -122,15 +168,15 @@ const SelectQues = () => {
                     quizDate:quizDate,
                     duration:parseInt(duration),
                     quizTime:quizTime,
-                    uname:uname,
+                    uname:uname, 
                     subId:subId}).then((res) => {
                     console.log(res)
-            }) 
+            })  
             axios.post('https://anitsquizapp.onrender.com/add-select-prev-ques',{quizId:quizId,selected:selected}).then((res) => {
             }) 
             navigate('/faculty/fdash')
         }   
-        else{
+        else{ 
             setFlag(false);
             window.scroll(0,0);
         }
@@ -144,13 +190,13 @@ return (
     <div className='d-flex flex-column' style={{minHeight:'100vh',background:"linear-gradient(to right,#cfd9df,#e2ebf0)"}}>
         <NavbarComp /> 
         {isLoading?<Loading />: 
-        <div> 
+        <div style={{marginTop:'100px'}}> 
             {flag?<></>:
-            <>
+            <> 
                 <Alert className='container mt-5' variant="warning" onClose={() => setFlag(true)} dismissible >  
                 <p className='h5'><b>Please select atleast 5 Questions to host your quiz</b></p>  
                 </Alert>
-            </>}  
+            </>}   
             <div className='d-flex flex-column align-items-center justify-content-start mt-5' id='whole' style={{fontFamily:"QuickSand",gap:"15px"}}>
                 <div className='text-center'>
                     <p className='h3'><b>Select the questions from the given question Bank</b></p>
@@ -170,15 +216,15 @@ return (
                             <Card id='sqs' className={`selectqs-card ${colored[item.quesid]?'bg-success text-white':'bg-white text-dark'} shadow shadow-0`}  key={item.quesid} onClick={(e) => {Clicked(e,item.quesid)}}>  
                                 <Card.Body>  
                                     <Card.Title><b>{item.topic_name}</b></Card.Title>
-                                    <Card.Title id='selectqs-card-text'>{item.question}</Card.Title>
+                                    <Card.Title id='selectqs-card-text' className='h4 prevent-select' dangerouslySetInnerHTML={{ __html: item.question }}></Card.Title>
                                 </Card.Body> 
                             </Card> 
                             </Fade>
                         ); 
                     })} 
                 <div className='d-flex justify-content-center'>
-                    <button className='btn btn-primary  m-5' onClick={Add}>Add New qs</button>
-                    <button className='btn btn-primary m-5' onClick={Host}>Host & Mail</button>
+                    <button className='btn btn-primary  m-5 animicard' onClick={Add}>Add New qs</button>
+                    <button className='btn btn-primary m-5 animicard' onClick={Host}>Host & Mail</button>
                 </div> 
             </div>
         </div>

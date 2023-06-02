@@ -48,7 +48,7 @@ const Fclass = () => {
     React.useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        },3000)
+        },1000)
         //eslint-disable-next-line
     },[])
     const Clicked = (index) => {

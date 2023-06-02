@@ -35,7 +35,7 @@ return (
                                 <Card id='sqs' className='hovered hovered-1'  key={item.quesid}>  
                                     <Card.Body className='text-start'>  
                                         <Card.Title><b>{item.topicName}</b></Card.Title>
-                                        <Card.Title id='selectqs-card-text' style={{fontSize:"22px"}}>{item.question}</Card.Title>
+                                        <Card.Title style={{fontSize:"22px"}} id='selectqs-card-text' className='h4 prevent-select' dangerouslySetInnerHTML={{ __html: item.question }}></Card.Title>
                                     </Card.Body> 
                                 </Card> 
                             ); 

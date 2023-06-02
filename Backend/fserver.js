@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express();
 const db = require('./connection')
+const nodemailer = require('nodemailer')
+const he = require('he')
 const cors = require('cors')
 const db_flog = require('./Databases/facultyLogin')
 const db_fclass = require('./Databases/facultyClasses')
@@ -146,7 +148,7 @@ app.post('/select-prev-ques',async (req,res) => {
         console.log(res1)
     }) 
     var mailId;
-    await db_class.find({ class_id: classId }).then((response) => {
+    await db_class.find({ class_id: req.body.classId }).then((response) => {
         mailId = response[0].mail;
     });
     const transporter = nodemailer.createTransport({
@@ -160,10 +162,10 @@ app.post('/select-prev-ques',async (req,res) => {
       const mailOptions = {
         from: 'anitsquiz01@gmail.com',
         to: mailId,
-        subject: `Reminder for ${QuizName} on ${quizdate} at ${quiztime}`,
+        subject: `Reminder for ${req.body.quizName} on ${req.body.quizDate} at ${req.body.quizTime}`,
         text: `Dear Students,
 
-        This is a reminder that the ${QuizName} is scheduled on ${quizdate}, at ${quiztime} The quiz will last for ${duration} minutes.
+        This is a reminder that the ${req.body.quizName} is scheduled on ${req.body.quizDate}, at ${req.body.quizTime} The quiz will last for ${req.body.duration} minutes.
         
         Please be prepared to participate on time and make the most of this opportunity. Good luck!
         
@@ -176,8 +178,100 @@ app.post('/select-prev-ques',async (req,res) => {
         });        
 })
 
+app.post('/select-prev-ques-from-add',async (req,res) => {
+    console.log(req.body);
+    await db_hqzs.insertMany({
+        quizid:req.body.quizId,
+        QuizName:req.body.quizName,
+        SubjectName:req.body.subName,
+        topicname:req.body.topicName,
+        noqs:req.body.noqs,
+        marks:req.body.marks,
+        class_id:req.body.classId,
+        quizdate:req.body.quizDate,
+        duration:req.body.duration,
+        quiztime:req.body.quizTime,
+        username:req.body.uname,
+        subId:req.body.subId
+    })
+    .then((res1) => {
+        console.log(res1)
+    })
+     
+    var htmlquestion = he.encode(req.body.question.question)
+    htmlquestion = htmlquestion.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmloption1 = he.encode(req.body.question.option1).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmloption2 = he.encode(req.body.question.option2).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmloption3 = he.encode(req.body.question.option3).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmloption4 = he.encode(req.body.question.option4).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmlanswer = he.encode(req.body.question.answer).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    db_qs.insertMany({
+        quesid:req.body.question.quesId,
+        topic_name:req.body.question.topicName,
+        subName:req.body.question.subName,
+        question:htmlquestion,
+        option1:htmloption1,
+        option2:htmloption2,
+        option3:htmloption3,
+        option4:htmloption4,
+        answer:htmlanswer
+    }).then((res1) => {
+        // Handle the response as needed
+    });
+
+    await db_hqs.insertMany({quizid:req.body.hostedques.quizId,quesids:req.body.hostedques.selected}).then(response => {
+        console.log("Questions",response)
+    });
+
+    var mailId;
+    await db_class.find({ class_id: req.body.classId }).then((response) => {
+        mailId = response[0].mail;
+    });
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'anitsquiz01@gmail.com',
+          pass: 'xdrsndeyvghifkjw',
+        },
+      });
+      
+      const mailOptions = {
+        from: 'anitsquiz01@gmail.com',
+        to: mailId,
+        subject: `Reminder for ${req.body.quizName} on ${req.body.quizDate} at ${req.body.quizTime}`,
+        text: `Dear Students,
+
+        This is a reminder that the ${req.body.quizName} is scheduled on ${req.body.quizDate}, at ${req.body.quizTime} The quiz will last for ${req.body.duration} minutes.
+        
+        Please be prepared to participate on time and make the most of this opportunity. Good luck!
+        
+        Best regards,`
+      };
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return error.message
+            }
+        });        
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.post('/add-select-prev-ques',(req,res) => {
-    console.log(req.body)
+    console.log("Called")
     db_hqs.insertMany({quizid:req.body.quizId,quesids:req.body.selected}).then(response => {
         console.log("Questions",response)
     });
@@ -195,17 +289,24 @@ app.post('/add-ques',(req,res) => {
 })
 
 app.post('/add-ques1',(req,res) => {
-    // console.log(req.body)
+    console.log("ADDED")
+    var htmlquestion = he.encode(req.body.question)
+    htmlquestion = htmlquestion.replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmloption1 = he.encode(req.body.option1).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmloption2 = he.encode(req.body.option2).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmloption3 = he.encode(req.body.option3).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmloption4 = he.encode(req.body.option4).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
+    var htmlanswer = he.encode(req.body.answer).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
     db_qs.insertMany({
         quesid:req.body.quesId,
         topic_name:req.body.topicName,
         subName:req.body.subName,
-        question:req.body.question,
-        option1:req.body.option1,
-        option2:req.body.option2,
-        option3:req.body.option3,
-        option4:req.body.option4,
-        answer:req.body.answer
+        question:htmlquestion,
+        option1:htmloption1,
+        option2:htmloption2,
+        option3:htmloption3,
+        option4:htmloption4,
+        answer:htmlanswer,
     }).then((res1) => {
     })
 })
