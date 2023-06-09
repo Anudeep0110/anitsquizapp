@@ -94,6 +94,7 @@ const SQuiz = () => {
     },[quizid])
 
     const Next = (e) => {
+        e.preventDefault()
         console.log(ind);
         if(ind<(qs.length-1)){
             if(qs[ind].answer === ch){
